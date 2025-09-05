@@ -1,20 +1,20 @@
 extends CharacterBody2D
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -200.0
+const JUMP_VELOCITY = 300.0
 const CUSTOM_GRAVITY = 400.0   # lower gravity for floatier jumps
 
 # --- Tilt Settings ---
 const MAX_TILT_GROUND = 0.3    # ~17° lean on ground
-const MAX_TILT_AIR    = 0.25   # ~8° lean in air
+const MAX_TILT_AIR    = 0.05   # ~8° lean in air
 
-const TILT_SPEED_GROUND = 1.5  # slower centering on ground
+const TILT_SPEED_GROUND = 1  # slower centering on ground
 const TILT_SPEED_AIR    = 0.5  # softer following in air
 
-const RETURN_DAMPING_GROUND = 3.0  # less damping = longer wobble
+const RETURN_DAMPING_GROUND = 1  # less damping = longer wobble
 const RETURN_DAMPING_AIR    = 2.0  # no damping in air
 
-const JUMP_WOBBLE = 0.15          # wobble impulse when jumping/landing
+const JUMP_WOBBLE = 0.07          # wobble impulse when jumping/landing
 
 # --- State ---
 var tilt_velocity: float = 0.0
@@ -34,20 +34,25 @@ func _physics_process(delta: float) -> void:
 		if dir == 0: dir = 1
 		tilt_velocity += dir * JUMP_WOBBLE
 		
-		var x_component = cos(rotation)
-		var y_component = sin(rotation)
-		velocity.y = JUMP_VELOCITY
+		var direction = Vector2.UP.rotated(rotation)
+		velocity.y = direction.y * JUMP_VELOCITY
+		velocity.x += direction.x * JUMP_VELOCITY
+
 		
 		
 
 	# Horizontal movement
-	var direction: float = Input.get_axis("ui_left", "ui_right")
-	if direction != 0.0:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, SPEED)
+	#var direction: float = Input.get_axis("ui_left", "ui_right")
+	#if direction != 0.0:
+		#velocity.x = direction * SPEED
+	#else:
+		#velocity.x = move_toward(velocity.x, 0.0, SPEED)
 
 	# Apply movement
+	if is_on_floor():
+		var damping = 0.05  # 0 < damping < 1
+		velocity.x = lerp(velocity.x, 0.0, damping)
+		
 	move_and_slide()
 
 	# Landing wobble
