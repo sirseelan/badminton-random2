@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjpnmhh42pyp4"]
+
+[ext_resource type="Texture2D" uid="uid://c0n8vdvscl6at" path="res://Assets/Court_floor.png" id="1_wrm1d"]
+[ext_resource type="Texture2D" uid="uid://bpttcmbw32m82" path="res://Assets/Net.png" id="2_3dryh"]
+[ext_resource type="PackedScene" uid="uid://d3gjtpvddxhqr" path="res://Scenes/player.tscn" id="3_wowpa"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i6g32"]
+distance = -58.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1l0tm"]
+size = Vector2(24, 390)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v158k"]
+size = Vector2(9, 103)
+
+[node name="Game" type="Node2D"]
+
+[node name="Court" type="StaticBody2D" parent="."]
+
+[node name="CourtFloor" type="Sprite2D" parent="Court"]
+position = Vector2(-23, -116)
+scale = Vector2(2.90375, 4.17188)
+texture = ExtResource("1_wrm1d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Court"]
+position = Vector2(0, -4)
+shape = SubResource("WorldBoundaryShape2D_i6g32")
+
+[node name="Camera2D" type="Camera2D" parent="Court"]
+position = Vector2(-23, -74)
+zoom = Vector2(2, 2)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-323, -100)
+shape = SubResource("RectangleShape2D_1l0tm")
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(278, -101)
+shape = SubResource("RectangleShape2D_1l0tm")
+
+[node name="Net" type="StaticBody2D" parent="."]
+
+[node name="Net" type="Sprite2D" parent="Net"]
+position = Vector2(-23, -73)
+scale = Vector2(2.9, 3.3)
+texture = ExtResource("2_3dryh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Net"]
+position = Vector2(-1.5, 0.5)
+shape = SubResource("RectangleShape2D_v158k")
+
+[node name="Player" parent="." instance=ExtResource("3_wowpa")]
+position = Vector2(-115, 50)
+scale = Vector2(2, 2)
