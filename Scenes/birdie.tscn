@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3s208nt64b13"]
+
+[ext_resource type="Texture2D" uid="uid://epiuvsd0qqda" path="res://Assets/birdie.png" id="1_ojp7o"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l72v6"]
+radius = 586.0
+height = 1748.0
+
+[node name="Birdie" type="RigidBody2D"]
+
+[node name="Birdie" type="Sprite2D" parent="."]
+texture = ExtResource("1_ojp7o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -100)
+shape = SubResource("CapsuleShape2D_l72v6")

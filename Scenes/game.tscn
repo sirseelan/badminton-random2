@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cjpnmhh42pyp4"]
+[gd_scene load_steps=8 format=3 uid="uid://cjpnmhh42pyp4"]
 
 [ext_resource type="Texture2D" uid="uid://c0n8vdvscl6at" path="res://Assets/Court_floor.png" id="1_wrm1d"]
 [ext_resource type="Texture2D" uid="uid://bpttcmbw32m82" path="res://Assets/Net.png" id="2_3dryh"]
@@ -12,6 +12,9 @@ size = Vector2(24, 390)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v158k"]
 size = Vector2(9, 103)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrm1d"]
+size = Vector2(9, 493)
 
 [node name="Game" type="Node2D"]
 
@@ -53,4 +56,12 @@ shape = SubResource("RectangleShape2D_v158k")
 
 [node name="Player" parent="." instance=ExtResource("3_wowpa")]
 position = Vector2(-115, 50)
-scale = Vector2(2, 2)
+scale = Vector2(1.6, 1.6)
+
+[node name="RigidBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-1.5, -123.5)
+collision_layer = 2
+collision_mask = 2
+
+[node name="invis wall" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_wrm1d")

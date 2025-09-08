@@ -8,7 +8,7 @@ const CUSTOM_GRAVITY = 400.0   # lower gravity for floatier jumps
 const MAX_TILT_GROUND = 0.3    # ~17° lean on ground
 const MAX_TILT_AIR    = 0.05   # ~8° lean in air
 
-const TILT_SPEED_GROUND = 1  # slower centering on ground
+const TILT_SPEED_GROUND = 0.5  # slower centering on ground
 const TILT_SPEED_AIR    = 0.5  # softer following in air
 
 const RETURN_DAMPING_GROUND = 1  # less damping = longer wobble
