@@ -9,14 +9,24 @@ var shot_type = 0
 func _physics_process(delta: float) -> void:
 	var angle_deg = rad_to_deg(global_rotation)
 	# Start override when pressing Right Arrow
-	if Input.is_action_just_pressed("ui_right"):
-		override_time = 0.8
-		if parent_node.is_on_floor():
-			forced_spin = -15.0
-			shot_type = 1
-		else:
-			forced_spin = 15.0  # constant spin (radians/sec). Try negative for opposite direction.
-			shot_type = 2
+	if parent_node.player == 1:
+		if Input.is_action_just_pressed("p1_hit"):
+			override_time = 0.8
+			if parent_node.is_on_floor():
+				forced_spin = -15.0
+				shot_type = 1
+			else:
+				forced_spin = 15.0  # constant spin (radians/sec). Try negative for opposite direction.
+				shot_type = 2
+	else:
+		if Input.is_action_just_pressed("p2_hit"):
+			override_time = 0.8
+			if parent_node.is_on_floor():
+				forced_spin = 15.0
+				shot_type = 2
+			else:
+				forced_spin = -15.0  # constant spin (radians/sec). Try negative for opposite direction.
+				shot_type = 1
 
 	# While override is active, force angular velocity
 	if override_time > 0.0:

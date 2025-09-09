@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var player = 1
+
 const SPEED = 300.0
 const JUMP_VELOCITY = 300.0
 const CUSTOM_GRAVITY = 400.0   # lower gravity for floatier jumps
@@ -19,6 +21,12 @@ const JUMP_WOBBLE = 0.07          # wobble impulse when jumping/landing
 # --- State ---
 var tilt_velocity: float = 0.0
 var was_on_floor: bool = false
+@onready var sprite2d: Sprite2D = $Player1
+
+func _ready() -> void:
+	if player == 2:
+		sprite2d.flip_h = true
+		sprite2d.position.x -= 4
 
 func _physics_process(delta: float) -> void:
 	# Apply custom gravity
@@ -26,17 +34,28 @@ func _physics_process(delta: float) -> void:
 		velocity.y += CUSTOM_GRAVITY * delta
 
 	# Jump only if on floor
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-
-		# Jump wobble follows movement/lean direction
-		var dir = sign(velocity.x)
-		if dir == 0: dir = sign(rotation)
-		if dir == 0: dir = 1
-		tilt_velocity += dir * JUMP_WOBBLE
-		
-		var direction = Vector2.UP.rotated(rotation)
-		velocity.y = direction.y * JUMP_VELOCITY
-		velocity.x += direction.x * JUMP_VELOCITY
+	if player == 1:
+		if Input.is_action_just_pressed("p1_jump") and is_on_floor():
+			# Jump wobble follows movement/lean direction
+			var dir = sign(velocity.x)
+			if dir == 0: dir = sign(rotation)
+			if dir == 0: dir = 1
+			tilt_velocity += dir * JUMP_WOBBLE
+			
+			var direction = Vector2.UP.rotated(rotation)
+			velocity.y = direction.y * JUMP_VELOCITY
+			velocity.x += direction.x * JUMP_VELOCITY
+	else:
+		if Input.is_action_just_pressed("p2_jump") and is_on_floor():
+			# Jump wobble follows movement/lean direction
+			var dir = sign(velocity.x)
+			if dir == 0: dir = sign(rotation)
+			if dir == 0: dir = 1
+			tilt_velocity += dir * JUMP_WOBBLE
+			
+			var direction = Vector2.UP.rotated(rotation)
+			velocity.y = direction.y * JUMP_VELOCITY
+			velocity.x += direction.x * JUMP_VELOCITY
 
 		
 		
